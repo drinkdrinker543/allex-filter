@@ -1,4 +1,5 @@
 import fs from 'fs';
+import path from 'path';
 import rule from '../rule';
 
 // Set filtername here
@@ -41,4 +42,4 @@ ${rule(
 `;
 
 // Write filter to output directory
-fs.writeFileSync(__dirname + `./output/${filterName}.filter`, getFilter());
+fs.writeFileSync(path.join(__dirname, `../../output/${filterName}.filter`), getFilter());
