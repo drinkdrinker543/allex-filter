@@ -89,6 +89,7 @@ export type Condition =
   | 'SetBorderColor'
   | 'SetFontSize'
   | 'SetTextColor'
+  | 'Continue'
 
 export type Operator = '<' | '<=' | '>' | '>=' | '=' | '==' | '!'
 

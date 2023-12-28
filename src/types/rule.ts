@@ -26,13 +26,14 @@ export type Rule = {
   content: RuleContent
   add: (...content: string[]) => Rule
   hide: () => Rule
-  baseType: <T extends ItemBaseType>(...baseType: T[]) => Rule
-  itemClass: (...itemClass: string[]) => Rule
+  continue: () => Rule
+  baseType: (...baseType: ItemBaseType[]) => Rule
+  itemClass: (...itemClass: ItemClass[]) => Rule
   influence: (...influences: Influence[]) => Rule
   size: (size: number) => Rule
   effect: (color: Color, temp?: boolean) => Rule
   sound: (id: NumberRange<1, 17>, volume?: number, positional?: boolean) => Rule
-  customSound: (path: string, volume?: number) => Rule
+  customSound: (path: string, volume?: 300) => Rule
   icon: (color: Color, shape: Shape, size?: 0 | 1 | 2) => Rule
   text: (r: number, g: number, b: number, a?: number) => Rule
   border: (r: number, g: number, b: number, a?: number) => Rule

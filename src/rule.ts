@@ -69,6 +69,11 @@ const rule = (...rules: Rule[]): Rule => {
       return this
     },
 
+    continue() {
+      this.content.set("Continue" , "")
+      return this
+    },
+
     baseType(...baseType) {
       this.content.set('BaseType', baseType.map((item) => `"${item}"`).join(' '))
       return this
@@ -101,8 +106,9 @@ const rule = (...rules: Rule[]): Rule => {
       return this
     },
 
+    // change file type here. didn't want to put in filter
     customSound(path, volume = 300) {
-      this.content.set('CustomAlertSound', `"allex-sounds/${path}" ${volume}`)
+      this.content.set('CustomAlertSound', `"allex-sounds/${path}.mp3" ${volume}`)
       return this
     },
 
