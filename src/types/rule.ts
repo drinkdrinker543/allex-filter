@@ -1,4 +1,17 @@
-import { Condition, ItemClass, Influence, NumberRange, Color, ExtendedOperator, Mixin, Operator, Rarity, Shape, ExplicitMods } from '.'
+import {
+  Condition,
+  ItemClass,
+  Influence,
+  NumberRange,
+  Color,
+  ExtendedOperator,
+  Mixin,
+  Operator,
+  Rarity,
+  Shape,
+  ExplicitMods,
+  ItemBaseType
+} from '.'
 
 export type RuleContent = {
   map: string[]
@@ -13,7 +26,7 @@ export type Rule = {
   content: RuleContent
   add: (...content: string[]) => Rule
   hide: () => Rule
-  baseType: <T extends string>(...baseType: T[]) => Rule
+  baseType: <T extends ItemBaseType>(...baseType: T[]) => Rule
   itemClass: (...itemClass: string[]) => Rule
   influence: (...influences: Influence[]) => Rule
   size: (size: number) => Rule
