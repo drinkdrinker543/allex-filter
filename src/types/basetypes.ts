@@ -2360,3 +2360,4 @@ export type ItemBaseType =
   | 'Unrelenting Timeless Vaal Emblem'
   | "Veritania's Crest"
   | "Goat's Horn"
+  | "Rusted Axe"

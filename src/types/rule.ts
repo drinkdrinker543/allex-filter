@@ -10,8 +10,12 @@ import {
   Rarity,
   Shape,
   ExplicitMods,
-  ItemBaseType
+  ItemBaseType,
 } from '.'
+
+import {
+  Colors
+} from "./colors";
 
 export type RuleContent = {
   map: string[]
@@ -35,9 +39,10 @@ export type Rule = {
   sound: (id: NumberRange<1, 17>, volume?: number, positional?: boolean) => Rule
   customSound: (path: string, volume?: 300) => Rule
   icon: (color: Color, shape: Shape, size?: 0 | 1 | 2) => Rule
-  text: (r: number, g: number, b: number, a?: number) => Rule
-  border: (r: number, g: number, b: number, a?: number) => Rule
-  background: (r: number, g: number, b: number, a?: number) => Rule
+  text: (color: Colors) => Rule
+  border: (color: Colors) => Rule
+  background: (color: Colors) => Rule
+  backgroundColor: (color: Colors) => Rule
   hasExplicitMod: (operator: ExtendedOperator, ...mods: ExplicitMods[]) => Rule
   rarity: (operator: Operator, rarity: Rarity) => Rule
   socketGroup: (operator: Operator, ...socketGroup: string[]) => Rule

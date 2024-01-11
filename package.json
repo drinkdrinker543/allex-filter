@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "myfilter": "ts-node ./src/filters/my-filter.ts"
+    "myfilter": "ts-node ./src/filters/my-filter.ts",
+    "flaskrules": "ts-node ./src/filters/flask-rules.ts",
+    "gem-rules": "ts-node ./src/filters/flask-rules.ts",
+    "gear-rules": "ts-node ./src/filters/gear-rules.ts",
+    "currency-rules": "ts-node ./src/filters/currency-rules.ts"
   },
   "keywords": [],
   "author": "",

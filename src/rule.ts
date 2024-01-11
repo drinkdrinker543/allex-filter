@@ -1,4 +1,5 @@
-import { Rule, Condition, RuleContent } from './types'
+import {Rule, Condition, RuleContent} from './types'
+import {Colors} from "./types/colors";
 
 /* Rule content
  * Serves as a proxy for accessing the map of conditions and their values,
@@ -101,14 +102,14 @@ const rule = (...rules: Rule[]): Rule => {
       return this
     },
 
-    sound(id, volume = 300, positional = true) {
+    sound(id, volume = 300, positional = false) {
       this.content.set(`PlayAlertSound${positional ? 'Positional' : ''}`, `${id} ${volume}`)
       return this
     },
 
     // change file type here. didn't want to put in filter
     customSound(path, volume = 300) {
-      this.content.set('CustomAlertSound', `"allex-sounds/${path}.mp3" ${volume}`)
+      this.content.set('CustomAlertSound', `"allex-sounds/${path}.wav" ${volume}`)
       return this
     },
 
@@ -117,18 +118,23 @@ const rule = (...rules: Rule[]): Rule => {
       return this
     },
 
-    text(r, g, b, a) {
-      this.content.set('SetTextColor', `${r} ${g} ${b} ${a !== undefined ? a : ''}`)
+    text(color) {
+      this.content.set('SetTextColor', `${color.r} ${color.g} ${color.b} ${color.a}`)
       return this
     },
 
-    border(r, g, b, a) {
-      this.content.set('SetBorderColor', `${r} ${g} ${b} ${a !== undefined ? a : ''}`)
+    border(color) {
+      this.content.set('SetBorderColor', `${color.r} ${color.g} ${color.b} ${color.a}`)
       return this
     },
 
-    background(r, g, b, a) {
-      this.content.set('SetBackgroundColor', `${r} ${g} ${b} ${a !== undefined ? a : ''}`)
+    background(color: Colors) {
+      this.content.set('SetBackgroundColor', `${color.r} ${color.g} ${color.b} ${color.a}`)
+      return this
+    },
+
+    backgroundColor(color: Colors) {
+      this.content.set("SetBackgroundColor", `${color.r} ${color.g} ${color.b} ${color.a}`)
       return this
     },
 

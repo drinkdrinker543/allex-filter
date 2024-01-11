@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import rule from '../rule';
+import {Colors} from "../types/colors";
 
 // Set filtername here
 const filterName = 'MyFilter';
@@ -13,6 +14,10 @@ function weaponRule() {
   return rule().itemClass("One Hand Swords", "One Hand Axes", "One Hand Maces", "Thrusting One Hand Swords", "Claws", "Daggers", "Rune Daggers", "Wands", "Sceptres", "Two Hand Swords", "Two Hand Maces", "Two Hand Axes", "Staves", "Warstaves", "Staves", "Shields", "Bows", "Quivers")
 }
 
+function leapslamRule() {
+  return rule().baseType("Rusted Sword", "Copper Sword", "Rusted Hatchet", "Boarding Axe", "Jade Hatchet", "Rusted Spike", "Whalebone Rapier")
+}
+
 function gearRule() {
   return rule().itemClass("Boots", "Gloves", "Body Armours", "Helmets")
 }
@@ -23,10 +28,6 @@ function jewelryRule() {
 
 function taintedCurrency() {
   return rule().baseType("Tainted Armourer's Scrap", "Tainted Blacksmith's Whetstone", "Tainted Chaos Orb", "Tainted Chromatic Orb", "Tainted Divine Teardrop", "Tainted Exalted Orb", "Tainted Jeweller's Orb", "Tainted Mythic Orb", "Tainted Orb of Fusing")
-}
-
-function expeditionCurrency() {
-  return rule().baseType("Polished Breach Scarab", "Polished Elder Scarab", "Polished Shaper Scarab", "Polished Torment Scarab", "Polished Ultimatum Scarab", "Rusted Abyss Scarab", "Rusted Ambush Scarab", "Rusted Bestiary Scarab", "Rusted Blight Scarab", "Rusted Breach Scarab", "Rusted Cartography Scarab", "Rusted Elder Scarab", "Rusted Harbinger Scarab", "Rusted Reliquary Scarab", "Rusted Shaper Scarab", "Rusted Torment Scarab", "Rusted Ultimatum Scarab")
 }
 
 function tierOneScarabs() {
@@ -61,35 +62,60 @@ function badBows() {
   return rule().baseType("Death Bow", "Decimation Bow", "Harbinger Bow", "Recurve Bow", "Decurve Bow", "Sniper Bow", "Citadel Bow", "Assassin Bow")
 }
 
-function oneByThreeGear() {
-  return rule().baseType("Rusted Sword", "Copper Sword", "Sabre", "Variscite Blade", "Cutlass", "Gemstone Sword", "Corsair Sword", "Glass Shank", "Skinning Knife", "Stiletto", "Flaying Knife", "Prong Dagger", "Poignard", "Pressurised Dagger", "Trisula", "Gutting Knife", "Ambusher", "Pneumatic Dagger", "Sai", "Carving Knife", "Boot Knife", "Copper Kris", "Skean", "Imp Dagger", "Butcher Knife", "Boot Blade", "Golden Kris", "Flashfire Blade", "Royal Skean", "Fiend Dagger", "Slaughter Knife", "Ezomyte Dagger", "Platinum Kris", "Imperial Skean", "Demon Dagger", "Infernal Blade", "Driftwood Wand", "Goat's Horn", "Carved Wand", "Quartz Wand", "Calling Wand", "Spiraled Wand", "Sage Wand", "Pagan Wand", "Faun's Horn", "Engraved Wand", "Crystal Wand", "Coiled Wand", "Congregator Wand", "Convening Wand", "Omen Wand", "Heathen Wand", "Demon's Horn", "Imbued Wand", "Opal Wand", "Tornado Wand", "Prophecy Wand", "Accumulator Wand", "Profane Wand", "Convoking Wand")
-}
-
 const getFilter = () => `
+### decorators
 ${
   rule(
-    badBows().rarity("==", "Normal").hide(),
-    badBows().rarity("==", "Magic").areaLevel(">=", 26).hide(),
-    gearRule().rarity("==", "Normal").hide(),
-    gearRule().rarity("==", "Magic").areaLevel(">", 24).hide(),
-    weaponRule().rarity("==", "Normal").hide(),
-    jewelryRule().rarity("==", "Normal").areaLevel(">", 13).hide(),
-    gearRule().rarity("==", "Normal").hide()
+    rule().rarity("==", 'Unique').text(Colors.uniqueColor),
+    rule().rarity("==", "Rare").text(Colors.rareColor),
+    rule().rarity("==", "Magic").text(Colors.magicColor),
+    rule().rarity("==", "Normal").text(Colors.normalColor),
   )
-    .continue()
-    .compile()}
+  .continue()
+  .compile()
+}
+
+Import "FlaskFilter.filter"
+Import "GearFilter.filter"
+Import "GemFilter.filter"
+Import "CurrencyFilter.filter"
+
+
+### TODO show specific early magic bad bows
+
+${
+	rule(
+		rule().baseType("Short Bow").areaLevel("<=", 10),
+		rule().baseType("Long Bow").areaLevel("<=", 15),
+		rule().baseType("Composite Bow").areaLevel("<=", 23),
+		rule().baseType("Bone Bow").areaLevel("<=", 29),
+		rule().baseType("Royal Bow").areaLevel("<=", 35),
+		rule().baseType("Grove Bow").areaLevel("<=", 48),
+		rule().baseType("Ivory Bow").areaLevel("<", 52),
+		rule().baseType("Highborn Bow").areaLevel("<=", 65),
+		rule().baseType("Thicket Bow").areaLevel("<=", 68),
+		rule().baseType("Spine Bow").itemLevel(">=", 74).itemLevel("<=", 80),
+	)
+		.icon("White", "Cross")
+		.background(Colors.darkGrey)
+		.rarity("==", "Normal")
+		.customSound("hael/bow")
+		.size(45)
+		.compile()
+}
 
 
 ### early socket rules
 ${
-  //<editor-fold desc="Description">
+  //#region Early sockets
   rule(
-    gearRule().sockets(">=", "GG").customSound("hael/greensockets"),
-    gearRule().sockets(">=", "RB").customSound("hael/bluered"),
+    gearRule().sockets(">=", "GG").customSound("hael/green_sockets"),
+    gearRule().sockets(">=", "RGB"),
   )
     .icon("Red", "Triangle").areaLevel("<=", 16)
-    .background(220, 220, 20)
-    .text(20, 20, 20)
+    .background(Colors.black)
+    .text(Colors.white)
+    .border(Colors.red)
     .size(45)
     .compile()
 }
@@ -97,13 +123,14 @@ ${
 ### later socket rules
 ${
   rule(
-    gearRule().sockets(">=", "4GGG").customSound("hael/greensockets"),
-    gearRule().sockets(">=", "RGB").customSound("hael/bluered"),
+    gearRule().sockets(">=", "4GGG").customSound("hael/green_sockets"),
+    gearRule().sockets(">=", "RGB").customSound("hael/blue_red"),
   )
     .icon("Red", "Triangle")
     .areaLevel("<=", 60)
-    .background(220, 220, 20)
-    .text(20, 20, 20)
+    .background(Colors.black)
+    .text(Colors.white)
+    .border(Colors.red)
     .size(45)
     .compile()
 }
@@ -116,9 +143,9 @@ ${
     gearRule().socketGroup(">=", "GGR").customSound("hael/3link"),
   )
     .icon("Cyan", "Triangle")
-    .areaLevel("<=", 25)
-    .background(220, 220, 20)
-    .text(50, 50, 50)
+    .areaLevel("<=", 27)
+    .background(Colors.purple)
+    .text(Colors.white)
     .size(45)
     .compile()
 }
@@ -131,75 +158,43 @@ ${
     gearRule().socketGroup(">=", "4GGR").customSound("hael/4link")
   )
     .icon("Cyan", "Triangle")
-    .areaLevel("<=", 60)
-    .background(220, 20, 220)
-    .text(50, 50, 50)
+    .areaLevel("<=", 70)
+    .background(Colors.black)
     .size(45)
     .compile()
-  //</editor-fold>
+  //#endregion
 }
 
-### All weapon rule
-### early white bows      
-${
-  //<editor-fold desc="Description">
-  rule(
-    rule().baseType("Crude Bow").areaLevel("<=", 3),
-    rule().baseType("Short Bow").areaLevel("<=", 8),
-    rule().baseType("Long Bow").areaLevel("<=", 14),
-  )
-    .icon("White", "Cross")
-    .rarity("==", "Normal")
-    .sockets(">=", "GG")
-    .customSound("hael/whitebow")
-    .background(240,240,240)
-    .text(20, 20, 20)
-    .size(45)
-    .compile()
-}
-        
-### show later white bows
-${
-  rule(
-    rule().baseType("Composite Bow").areaLevel("<=", 21),
-    rule().baseType("Bone Bow").areaLevel("<=", 27),
-    rule().baseType("Royal Bow").areaLevel("<=", 33),
-    rule().baseType("Grove Bow").areaLevel("<=", 50),
-    rule().baseType("Highborn Bow").areaLevel("<=", 56),
-    rule().baseType("Thicket Bow").areaLevel("<=", 65),
-    rule().baseType("Spine Bow").itemLevel(">=", 74).itemLevel("<=", 80),
-  )
-    .icon("White", "Cross")
-    .rarity("==", "Normal")
-    .sockets(">=", "GG")
-    .customSound("hael/whitebow")
-    .background(240,240,240)
-    .text(20, 20, 20)
-    .size(45)
-    .compile()
-}
-
+### All weapon rule 
 ${
   rule()
     .itemClass("Bows")
     .rarity("==", "Rare")
-    .customSound("hael/rareweapon", 300)
+    .customSound("hael/rare_weapon", 300)
     .icon("Cyan", "UpsideDownHouse")
-    .background(240,240,240)
-    .text(20, 20, 200)
+    .background(Colors.black)
+    .border(Colors.red)
     .size(45)
     .compile()
+}
+
+${
+  rule(
+    badBows().rarity("==", "Magic").areaLevel("<=", 37),
+    badBows().rarity("==", "Normal").areaLevel("<=", 18)
+  )
+  .compile()
 }
 
 ${
   rule()
     .itemClass("Bows")
     .rarity("==", "Magic")
-    .areaLevel("<=", 35)
-    .customSound("hael/magicweapon", 300)
+    .areaLevel("<=", 40)
+    .customSound("hael/magicweapon")
     .icon("Red", "UpsideDownHouse")
-    .background(200,200,200)
-    .text(20, 20, 200)
+    .background(Colors.black)
+    .text(Colors.blue)
     .size(45)
     .compile()
 }
@@ -208,10 +203,10 @@ ${
   rule()
     .itemClass("Quivers")
     .rarity("==", "Rare")
-    .customSound("hael/rarequiver", 300)
+    .customSound("hael/rare_quiver", 300)
     .icon("Cyan", "Kite")
-    .background(240,240,240)
-    .text(20, 20, 200)
+    .background(Colors.white)
+    .text(Colors.black)
     .size(45)
     .compile()
 }
@@ -221,10 +216,10 @@ ${
     .itemClass("Quivers")
     .rarity("==", "Magic")
     .areaLevel("<=", 35)
-    .customSound("hael/magicquiver", 300)
+    .customSound("hael/magic_quiver", 300)
     .icon("Red", "Kite")
-    .background(200,200,200)
-    .text(20, 20, 200)
+    .background(Colors.black)
+    .text(Colors.blue)
     .size(45)
     .compile()
 }
@@ -236,8 +231,7 @@ ${
     .areaLevel("<=", 16)
     .customSound("hael/quiver", 300)
     .icon("White", "Kite")
-    .background(200,200,200)
-    .text(20, 20, 200)
+    .background(Colors.black)
     .size(45)
     .compile()
 }
@@ -247,222 +241,99 @@ ${
     .itemClass("Quivers")
     .baseType("Feathered Arrow Quiver")
     .rarity("==", "Normal")
-    .customSound("hael/featheredquiver", 300)
+    .customSound("hael/feathered", 300)
     .icon("White", "Kite")
-    .background(200,200,200)
-    .text(20, 20, 200)
+    .background(Colors.black)
     .size(45)
     .compile()
-  //</editor-fold>
+  //#endregion
+}
+
+### strand rules
+${
+  rule().rarity("==", "Normal").areaLevel("<=", 2).size(45).compile()
 }
 
 # any usable rare
 ${
   rule(
-    rule().itemClass("Gloves").customSound("hael/raregloves", 300),
-    rule().itemClass("Boots").customSound("hael/rareboots", 300),
-    rule().itemClass("Helmets").customSound("hael/rarehelmets", 300),
-    rule().itemClass("Body Armours").customSound("hael/rarebody", 300),
+    rule().itemClass("Gloves"),
+    rule().itemClass("Boots"),
+    rule().itemClass("Helmets"),
+    rule().itemClass("Body Armours"),
   )
-    .baseEvasion(">", 1)
-    .customSound("hael/raregear")
-    .icon("Red", "Moon")
-    .text(20, 20, 20)
-    .background(120, 120, 120)
-    .border(255, 0, 0)
+    .rarity(">=", "Rare")
+    .baseEvasion(">=", 1)
+    .baseArmour("==", 0)
+    .baseES("==", 0)
+    .background(Colors.black)
+    .border(Colors.red)
     .size(45)
     .compile()
 }
 
 ### misc leveling
-###
+
+### annoying things
+#
+#  rule().baseType("Simple Robe").rarity("==", "Normal").hide().compile()
+#
+
+### show early jewelry
 ${
-  //<editor-fold desc="misc leveling">
   rule(
-    rule().baseType("Sniper's Mark").areaLevel("<=", 12),
-    rule().baseType("War Banner").areaLevel("<=", 12),
-    rule().baseType("Frostblink").areaLevel("<=", 12),
-    rule().baseType("Faster Attacks Support").areaLevel("<=", 42),
-    rule().baseType("Poacher's Mark").areaLevel("<=", 21),
-    rule().baseType("Ensnaring Arrow").areaLevel("<=", 21),
-    rule().baseType("Trinity Support").areaLevel("<=", 12),
-    rule().baseType("Elemental Damage with Attacks Support").areaLevel("<=", 12),
-    rule().baseType("Storm Rain").areaLevel("<=", 45),
-    rule().baseType("Blast Rain").areaLevel("<=", 45),
-    rule().baseType("Returning Projectiles Support").areaLevel("<=", 60),
-    rule().baseType("Multiple Totems Support").areaLevel("<=", 60),
-    rule().baseType("Artillery Ballista").areaLevel("<=", 42),
+    rule().baseType("Iron Ring").areaLevel("<=", 20).customSound("iron_ring"),
+    rule().baseType("Rustic Sash").areaLevel("<=", 20).customSound("rustic"),
+    rule().baseType("Coral Ring").areaLevel("<=", 12),
+    rule().baseType("Sapphire Ring", "Topaz Ring", "Ruby Ring", "Two-Stone Ring", "Lapis Amulet", "Heavy Belt").areaLevel("<=", 30)
   )
-    .sound(lessThanTink)
-    .icon("Cyan", "Hexagon")
-    .text(220, 220, 220)
-    .background(20, 20, 20)
-    .border(255, 0, 0)
+    .background(Colors.darkGrey)
+    .border(Colors.red)
     .size(45)
-    .compile()
-}
-
-### flask rule
-${
-  rule(
-    rule().baseType("Medium Life Flask").areaLevel("<=", 11),
-    rule().baseType("Large Life Flask").areaLevel("<=", 15),
-    rule().baseType("Greater Life Flask").areaLevel("<=", 17),
-    rule().baseType("Grand Life Flask").areaLevel("<=", 23),
-    rule().baseType("Giant Life Flask").areaLevel("<=", 29),
-    rule().baseType("Colossal Life Flask").areaLevel("<=", 35),
-    rule().baseType("Hallowed Life Flask").areaLevel("<=", 55),
-    rule().baseType("Divine Life Flask").areaLevel("<=", 75),
-  )
-    .customSound("hael/lifeflask")
-    .icon("Red", "Hexagon")
-    .text(0, 250, 250)
-    .background(250, 0, 0)
-    .border(0, 0, 0)
-    .size(45)
-    .compile()
-}
-
-${
-  rule(
-    rule().baseType("Medium Mana Flask").areaLevel("<=", 11),
-    rule().baseType("Large Mana Flask").areaLevel("<=", 13),
-    rule().baseType("Greater Mana Flask").areaLevel("<=", 20),
-    rule().baseType("Grand Mana Flask").areaLevel("<=", 26),
-    rule().baseType("Giant Mana Flask").areaLevel("<=", 31),
-    rule().baseType("Colossal Mana Flask").areaLevel("<=", 37),
-    rule().baseType("Hallowed Mana Flask").areaLevel("<=", 49),
-  )
-    .customSound("hael/manaflask")
-    .icon("Blue", "Hexagon")
-    .text(0, 250, 250)
-    .background(250, 0, 0)
-    .border(0, 0, 0)
-    .size(45)
-    .compile()
-}
-
-### unidentified small rare rule
-${
-  rule(
-    jewelryRule().size(45),
-    oneByThreeGear().size(45),
-    rule().itemClass("Thrusting One Hand Swords").size(35),
-    rule().itemClass("Boots", "Helmets", "Gloves").size(45),
-    rule().itemClass("Shields").baseArmour("==", 0).size(30),
-    rule().itemClass("Life Flasks", "Mana Flasks", "Hybrid Flasks", "Utility Flasks"),
-  )
-    .identified(false)
-    .rarity(">=", "Rare")
-    .text(255, 150, 150)
-    .background(50, 50, 50)
-    .continue()
-    .compile()
-}
-
-### show unidentified small magic rule
-${
-  rule(
-    jewelryRule().size(25),
-    oneByThreeGear().size(25),
-    rule().itemClass("Thrusting One Hand Swords").size(35),
-    rule().itemClass("Boots", "Helmets", "Gloves").size(45),
-    rule().itemClass("Shields").baseArmour("==", 0).size(30),
-  )
-    .identified(false)
-    .rarity("==", "Magic")
-    .text(150, 150, 255)
-    .background(50, 50, 50)
-    .areaLevel("<=", 40)
-    .continue()
-    .compile()
-}
-
-### hide high lvl unid magic
-${
-  rule(
-    jewelryRule().hide(),
-    oneByThreeGear().hide(),
-    rule().itemClass("Thrusting One Hand Swords").hide(),
-    rule().itemClass("Boots", "Helmets", "Gloves").hide(),
-    rule().itemClass("Shields").baseArmour("==", 0).hide(),
-  )
-    .identified(false)
-    .rarity("==", "Magic")
-    .areaLevel(">=", 45)
-    .continue()
-    .compile()
-}
-
-### show large low lvl magic unids
-${
-  rule(
-    rule().itemClass("Two Hand Axes", "Two Hand Swords", "Two Hand Maces", "Staves", "Warstaves"),
-    rule().itemClass("Shields").baseArmour(">=", 1),
-    rule().itemClass("Body Armours")
-  )
-    .identified(false)
-    .rarity("==", "Magic")
-    .text(150, 150, 255)
-    .background(50, 50, 50)
-    .size(15)
-    .areaLevel("<=", 30)
-    .continue()
     .compile()
 }
 
 ### hide large high lvl magic unids 
-${
-  rule(
-    rule().itemClass("Two Hand Axes", "Two Hand Swords", "Two Hand Maces", "Staves", "Warstaves").hide(),
-    rule().itemClass("Shields").baseArmour(">=", 1).hide(),
-  )
-    .identified(false)
-    .rarity("==", "Magic")
-    .text(150, 150, 255)
-    .background(50, 50, 50)
-    .size(15)
-    .areaLevel(">=", 31)
-    .continue()
-    .compile()
-  //</editor-fold>
-}
 
-### currency rule
+### group leveling
+### early group links
+### casters
 ${
-  //<editor-fold desc="Currency Rule">
   rule(
-    rule().baseType('Regal Orb').icon('Green', 'Circle').customSound("hael/regal", 300),
-    rule().baseType('Orb of Chance').icon('Green', 'Circle').customSound("hael/chance", 300),
-    rule().baseType('Orb of Binding').icon('White', 'Circle').customSound("hael/binding", 300),
-    rule().baseType('Orb of Scouring').icon('Green', 'Circle').customSound("hael/scouring", 300),
-    rule().baseType('Orb of Alchemy').icon('White', 'Circle').customSound("hael/alchemy", 300),
-    rule().baseType('Orb of Alteration').icon('Green', 'Circle').customSound("hael/alteration", 300),
-    rule().baseType('Vaal Orb').icon('Red', 'Circle').customSound("hael/vaal", 300),
-    rule().baseType('Chaos Orb').icon('Red', 'Circle').customSound("hael/chaos", 300),
-    rule().baseType("Chaos Shard").icon("White", "Circle"),
-    rule().baseType("Veiled Chaos Orb").icon("Red", "Circle").customSound("hael/veiledchaos", 300),
-    rule().baseType('Orb of Regret').icon('Red', 'Circle').customSound("hael/regret", 300),
-    rule().baseType("Exalted Orb").icon("Cyan", "Circle").customSound("hael/exalted", 300),
-    rule().baseType("Divine Orb").icon("Cyan", "Circle").customSound("hael/divine", 300),
-    rule().baseType("Mirror of Kalandra").icon("Cyan", "Circle").customSound("hael/mirror", 300),
-    rule().baseType("Mirror Shard").icon("Cyan", "Circle").customSound("hael/mirror", 300),
-    rule().baseType("Fracturing Orb").icon("Cyan", "Circle").customSound("hael/fracturing", 300),
-    rule().baseType("Fracturing Shard").icon("Cyan", "Circle").customSound("hael/fracturing", 300),
+    leapslamRule().sockets(">=", "2B").areaLevel("<=", 18).customSound("hael/blue_weapon"),
+    gearRule().socketGroup(">=", "BBB").areaLevel("<=", 18).customSound("hael/3_blue"),
+    gearRule().socketGroup(">=", "BBG").areaLevel("<=", 24).customSound("hael/crema"),
   )
-    .text(240, 240, 240)
-    .background(120, 120, 120)
-    .border(255, 255, 255)
+    .icon("Purple", "Star")
     .size(45)
+    .border(Colors.red)
+    .background(Colors.black)
     .compile()
-  //</editor-fold>
+}
+### TODO duelist
+
+### TODO marauder
+
+### late group links
+### caster
+${
+  rule(
+    gearRule().socketGroup(">=", "BBBB").areaLevel("<=", 42).customSound("hael/arma_links"),
+    gearRule().socketGroup(">=", "BBBG").areaLevel("<=", 42).customSound("hael/crema_links"),
+    gearRule().socketGroup(">=", "BBGR").areaLevel("<=", 42).customSound("hael/crema_links"),
+  )
+    .icon("Purple", "Star")
+    .size(45)
+    .border(Colors.red)
+    .background(Colors.black)
+    .compile()
 }
   
   
 ### leveling specific currency rules
 ###
 ${
-  //<editor-fold desc="leveling currency rules">
+  //#region Leveling Currency Rules
   rule(
     rule().baseType("Orb of Transmutation").areaLevel("<", 50).icon("Red", "Circle").customSound("hael/transmutation", 300),
     rule().baseType("Orb of Transmutation").areaLevel("<", 75).stackSize(">=", 2).icon("Red", "Circle").customSound("hael/transmutation", 300),
@@ -487,24 +358,12 @@ ${
     rule().baseType("Orb of Augmentation").areaLevel("<", 30).icon("White", "Circle").customSound("hael/augment", 300),
     rule().baseType("Orb of Augmentation").areaLevel("<", 100).stackSize(">=", 2).icon("White", "Circle")
   )
-    .text(240, 240, 240)
-    .background(120, 120, 120)
-    .border(255, 255, 255)
+    .text(Colors.black)
+    .background(Colors.lightGrey)
+    .border(Colors.red)
     .size(45)
     .compile()
-  //</editor-fold>
-}
-    
-### misc currency
-### tainted currency
-${
-  //<editor-fold desc="Other currency">
-  taintedCurrency().icon("Red", "Star").sound(lessThanTink, 200)
-    .text(240, 240, 240)
-    .background(240, 120, 120)
-    .border(255, 255, 255)
-    .size(45)
-    .compile()
+  //#endregion
 }
 
 ### other currency
@@ -513,28 +372,16 @@ ${
     rule().baseType("Rogue's Marker"),
   )
     .icon("White", "Star")
-    .text(240, 240, 240)
-    .background(240, 120, 120)
-    .border(255, 255, 255)
+    .text(Colors.white)
+    .background(Colors.black)
     .size(45)
     .compile()
-}
-
-### expedition currency
-${
-  expeditionCurrency().icon("Red", "Star").sound(lessThanTink, 200)
-    .text(240, 240, 240)
-    .background(240, 120, 120)
-    .border(255, 255, 255)
-    .size(45)
-    .compile()
-  //</editor-fold>
 }
   
 ### map rule
 ###
 ${
-  //<editor-fold desc="map rule">
+  //#region Map rule
   rule(
     rule().mapTier("<=", 5).mapTier(">=", 1).icon("White", "Square").customSound("hael/whitemap", 300),
     rule().mapTier("<=", 10).mapTier(">=", 6).icon("Yellow", "Square").customSound("hael/yellowmap", 300),
@@ -542,32 +389,32 @@ ${
   )
     .itemClass("Maps")
     .rarity("!", "Unique")
-    .text(240, 240, 240)
-    .background(220,80,220)
+    .text(Colors.white)
+    .background(Colors.darkGrey)
+    .border(Colors.gold)
     .size(45)
     .compile()
 }
 
 ${rule().itemClass("Maps").rarity("==", "Unique").icon("Brown", "Square").customSound("hael/uniquemap", 300)
-  .text(240, 240, 240)
-  .background(220,80,220)
+  .text(Colors.black)
+  .background(Colors.lightGrey)
   .size(45)
   .compile()
-  //</editor-fold>
+  //#endregion
 }
     
 ### fragments
 ### scarab rule
 ${
-  //<editor-fold desc="Description">
+  //#region Scarabs
   rule(
     tierOneScarabs().icon("White", "Diamond"),
     tierTwoScarabs().icon("Red", "Diamond"),
     tierThreeScarabs().icon("Red", "Diamond"),
   )
-    .text(240, 240, 240)
-    .background(80, 240, 80)
-    .border(255, 255, 255)
+    .text(Colors.white)
+    .background(Colors.green)
     .size(45)
     .compile()}
     
@@ -578,24 +425,22 @@ ${rule(
   otherFragments().icon("Red", "Raindrop").sound(lessThanTink),
   bossFragments().icon("Cyan", "Raindrop").sound(tink)
 )
-  .text(240, 240, 240)
-  .background(80, 240, 80)
-  .border(255, 255, 255)
+  .text(Colors.white)
+  .background(Colors.blue)
   .size(45)
   .compile()
-  //</editor-fold>
+  //#endregion
 }
-    
+
 ### misc catch all
 ${
-  //<editor-fold desc="Description">
+  //#region Misc catch-all
   rule()
     .itemClass("Quest Items")
     .icon("Green", "Cross")
-    .customSound("hael/questitem")
-    .text(50, 50, 50)
-    .background(20, 240, 20)
-    .border(20, 255, 20)
+    .text(Colors.white)
+    .background(Colors.green)
+    .border(Colors.gold)
     .size(45)
     .compile()
 }
@@ -605,9 +450,9 @@ ${
     .itemClass("Sanctified Relics")
     .icon("Green", "Cross")
     .sound(lessThanTink)
-    .text(50, 50, 50)
-    .background(20, 240, 20)
-    .border(20, 255, 20)
+    .text(Colors.black)
+    .background(Colors.gold)
+    .border(Colors.red)
     .size(45)
     .compile()
 }
@@ -616,9 +461,8 @@ ${
   rule()
     .itemClass("Contracts")
     .icon("White", "Cross")
-    .text(50, 50, 50)
-    .background(200, 200, 200)
-    .border(20, 255, 20)
+    .text(Colors.black)
+    .background(Colors.lightGrey)
     .size(45)
     .compile()
 }
@@ -628,60 +472,13 @@ ${
     .itemClass("Blueprints")
     .sound(lessThanTink)
     .icon("Red", "Cross")
-    .text(50, 50, 50)
-    .background(150, 150, 150)
-    .border(20, 255, 20)
+    .text(Colors.black)
+    .background(Colors.white)
+    .border(Colors.gold)
     .size(45)
     .compile()
+    //#endregion
 }
-
-${
-  // TODO make this super loud for bow gems
-  rule(
-    rule().itemClass("Skill Gems"),
-    rule().itemClass("Support Gems")
-  )
-    .gemLevel(">=", 2)
-    .gemLevel("<=", 19)
-    .sound(wayLessThanTink)
-    .icon("White", "Cross")
-    .text(50, 50, 50)
-    .background(20, 240, 20)
-    .border(20, 255, 20)
-    .size(45)
-    .compile()
-}
-
-${
-  rule(
-    rule().itemClass("Skill Gems"),
-    rule().itemClass("Support Gems")
-  )
-    .gemLevel(">=", 20)
-    .sound(wayLessThanTink)
-    .icon("Red", "Cross")
-    .text(50, 50, 50)
-    .background(20, 240, 20)
-    .border(20, 255, 20)
-    .size(45)
-    .compile()
-}
-
-${
-  rule(
-    rule().itemClass("Skill Gems"),
-    rule().itemClass("Support Gems")
-  )
-    .quality(">=", 5)
-    .sound(wayLessThanTink)
-    .icon("Red", "Cross")
-    .text(50, 50, 50)
-    .background(20, 240, 20)
-    .border(20, 255, 20)
-    .size(45)
-    .compile()
-  //</editor-fold>
-} 
 `;
 
 // Write filter to output directory
