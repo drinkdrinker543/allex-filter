@@ -66,3 +66,4 @@ export type ItemClass =
   | 'Warstaves'
   | 'Belts'
   | 'Wands'
+  | "Flasks"

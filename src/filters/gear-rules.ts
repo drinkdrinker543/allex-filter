@@ -6,16 +6,25 @@ import {Colors} from "../types/colors";
 // this filter contains rules for showing mostly unid gear.
 
 // Set filtername here
-const filterName = 'GearFilter';
+const filterName = 'ZZZZ-hael-GearFilter';
+
+const large = 45;
+const medium = 35;
+const small = 30;
 
 function allGear() {
-	return rule().itemClass("Daggers", "Rune Daggers", "Gloves", "Helmets", "Body Armours", "Belts", "Rings", "Amulets", "Two Hand Axes", "Two Hand Maces", "Two Hand Swords", "Thrusting One Hand Swords", "One Hand Axes", "One Hand Maces", "One Hand Swords", "Sceptres", "Wands", "Staves", "Warstaves", "Shields", "Quivers")
+	return rule().itemClass("Claws", "Daggers", "Rune Daggers", "Gloves", "Helmets", "Body Armours", "Belts", "Rings", "Amulets", "Two Hand Axes", "Two Hand Maces", "Two Hand Swords", "Thrusting One Hand Swords", "One Hand Axes", "One Hand Maces", "One Hand Swords", "Sceptres", "Wands", "Staves", "Warstaves", "Shields", "Quivers")
+}
+
+function allGearMinusJewellry() {
+	return rule().itemClass("Claws", "Daggers", "Rune Daggers", "Gloves", "Helmets", "Body Armours", "Two Hand Axes", "Two Hand Maces", "Two Hand Swords", "Thrusting One Hand Swords", "One Hand Axes", "One Hand Maces", "One Hand Swords", "Sceptres", "Wands", "Staves", "Warstaves", "Shields", "Quivers")
 }
 
 function gearRule() {
   return rule().itemClass("Boots", "Gloves", "Body Armours", "Helmets")
 }
   
+// this doesn't include bad rings
 function jewelryRule() {
   return rule().baseType("Sapphire Ring", "Ruby Ring", "Topaz Ring", "Two-Stone Ring", "Amethyst Ring", "Lapis Amulet", "Jade Amulet", "Amber Amulet", "Citrine Amulet", "Agate Amulet", "Turquoise Amulet", "Onyx Amulet", "Gold Amulet", "Heavy Belt", "Leather Belt", "Chain Belt", "Stygian Vise", "Vanguard Belt", "Rustic Sash", "Crystal Belt", "Cloth Belt")
 }
@@ -26,6 +35,10 @@ function goodRings() {
 
 function goodAmulets() {
 	return rule().baseType("Lapis Amulet", "Jade Amulet", "Amber Amulet", "Citrine Amulet", "Agate Amulet", "Turquoise Amulet", "Onyx Amulet", "Gold Amulet")
+}
+
+function goodBelts() {
+  return rule().baseType("Heavy Belt", "Leather Belt")
 }
 
 function leapslamRule() {
@@ -47,7 +60,7 @@ function badBows() {
 function showUniqueRareGear() {
 	let str = ""
 	for (let i = 45; i < 70; i++) {
-		str += rule().width("<=", 2).height("<=", 2).areaLevel("==", i).itemLevel("==", i + 2).rarity("==", "Rare").size(30).continue().compile()
+		str += rule().width("<=", 2).height("<=", 2).areaLevel("==", i).itemLevel("==", i + 2).rarity("==", "Rare").size(20).continue().compile()
 		str += "\n\n"
 	}
 
@@ -67,102 +80,152 @@ ${
 	.compile()
 }
 
-
-${
-	rule(
-		gearRule(),
-		jewelryRule(),
-		weaponRule(),
-	)
-		.rarity("==", "Unique")
-		.background(Colors.black)
-		.size(45)
-		.border(Colors.uniqueColor)
-		.compile()
-}
-
-
-### shows small rare loot for leveling
 ${
   rule(
-      oneByThreeGear().size(30),
-      rule().itemClass("Thrusting One Hand Swords").size(30),
-      rule().itemClass("Boots", "Helmets", "Gloves").size(30),
-      rule().itemClass("Shields").size(30),
-    )
-			.areaLevel("<=", 45)
-      .rarity("==", "Rare")
-      .text(Colors.gold)
-      .background(Colors.black)
-      .continue()
-      .compile()
-  }
-
-### nuts unique/rare only show rare gear drops
-${
-	showUniqueRareGear()
+    allGear().rarity("==", "Unique").continue(),
+  )
+  .sound(4)
+  .size(45)
+  .border(Colors.uniqueColor)
+  .compile()
 }
-  
-  ### show unidentified small magic rule
+### jewelry rules
+### show early jewelry
 ${
-    rule(
-      jewelryRule().size(40),
-      oneByThreeGear().size(25),
-      rule().itemClass("Thrusting One Hand Swords").size(25),
-      rule().itemClass("Boots", "Helmets", "Gloves").size(35),
-      rule().itemClass("Shields").baseArmour("==", 0).size(25),
-    )
-      .rarity("==", "Magic")
-      .text(Colors.blue)
-      .background(Colors.black)
-      .border(Colors.blue)
-      .areaLevel("<=", 30)
-      .continue()
-      .compile()
-  }
-  
-  ### hide high lvl unid magic
-${
-    rule(
-      allGear().hide()
-    )
-      .identified(false)
-      .rarity("==", "Magic")
-      .areaLevel(">=", 31)
-			.continue()
-      .compile()
+  //#region jewelry rules
+  rule(
+    rule().baseType("Iron Ring").areaLevel("<=", 25).customSound("iron_ring"),
+    rule().baseType("Rustic Sash").areaLevel("<=", 20).customSound("rustic"),
+    rule().baseType("Coral Ring").areaLevel("<=", 16),
+    rule().baseType("Sapphire Ring", "Topaz Ring", "Ruby Ring", "Two-Stone Ring", "Lapis Amulet", "Heavy Belt").areaLevel("<=", 33)
+  )
+    .border(Colors.red)
+    .size(45)
+    .compile()
 }
 
-${
-	rule(
-		jewelryRule()
-	)
-		.identified(false)
-		.rarity("==", "Magic")
-		.background(Colors.black)
-		.size(45)
-		.areaLevel(">=", 31)
-		.areaLevel("<=", 55)
-		.continue()
-		.compile()
-}
-  
-  ### show large low lvl magic unids
+### higher is more priority
+# todo: check if continues apply correctly
+
 ${
   rule(
-    rule().itemClass("Two Hand Axes", "Two Hand Swords", "Two Hand Maces", "Staves", "Warstaves"),
-    rule().itemClass("Shields").baseArmour(">=", 1),
-    rule().itemClass("Body Armours")
-    )
-      .identified(false)
-      .rarity("==", "Magic")
-      .text(Colors.blue)
-      .background(Colors.black)
-      .size(25)
-      .areaLevel("<=", 28)
-      .continue()
-      .compile()
-  }
+    rule().baseType('Amethyst Ring').rarity("==", "Normal").areaLevel("<=", 77),
+    rule().baseType("Stygian Vise")
+  )
+  .size(45)
+  .border(Colors.red)
+  .background(Colors.white)
+  .text(Colors.black)
+  .compile()
+}
+
+
+### magic gear section
+${
+  rule(
+    // smaller gear shown smaller at higher levels section
+    allGear().height("==", 2).width("==", 1).size(25).areaLevel("<=", 45),
+    allGear().height("==", 3).width("==", 1).size(25).areaLevel("<=", 45),
+    allGear().height("==", 4).width("==", 1).size(25).areaLevel("<=", 45),
+    allGear().height("==", 1).width("==", 2).size(25).areaLevel("<=", 45),
+    jewelryRule().size(45).areaLevel("<=", 45),
+    allGear().height("==", 1).width("==", 2).size(40).areaLevel("<=", 32),
+    allGear().height("==", 2).width("==", 2).size(35).areaLevel("<=", 32),
+    allGear().height("==", 3).width("==", 2).size(30).areaLevel("<=", 26),
+    allGear().height("==", 4).width("==", 2).size(25).areaLevel("<=", 26),
+    allGear().height("==", 2).width("==", 1).size(40).areaLevel("<=", 32),
+    allGear().height("==", 3).width("==", 1).size(40).areaLevel("<=", 32),
+    allGear().height("==", 4).width("==", 1).size(40).areaLevel("<=", 32),
+  )
+  .rarity("==", "Magic")
+  .continue()
+  .compile()
+}
+
+${
+  rule(
+    goodAmulets(),
+    goodRings(),
+    goodBelts(),
+  )
+  .rarity(">=", "Rare")
+  .areaLevel("<=", 82)
+  .border(Colors.red)
+  .size(45)
+  .sound(2)
+  .compile()
+}
+
+### rare gear section
+${
+  rule(
+    // smaller gear shown smaller at higher levels section
+    allGear().height("==", 2).width("==", 1).size(25).areaLevel("<=", 65),
+    allGear().height("==", 3).width("==", 1).size(25).areaLevel("<=", 65),
+    allGear().height("==", 4).width("==", 1).size(25).areaLevel("<=", 65),
+    allGear().height("==", 1).width("==", 2).size(25).areaLevel("<=", 65),
+    allGear().height("==", 1).width("==", 2).size(40).areaLevel("<=", 65),
+    allGear().height("==", 2).width("==", 2).size(35).areaLevel("<=", 65),
+    allGear().height("==", 3).width("==", 2).size(30).areaLevel("<=", 65),
+    allGear().height("==", 4).width("==", 2).size(25).areaLevel("<=", 35),
+    allGear().height("==", 2).width("==", 1).size(40).areaLevel("<=", 42),
+    allGear().height("==", 3).width("==", 1).size(40).areaLevel("<=", 42),
+    allGear().height("==", 4).width("==", 1).size(40).areaLevel("<=", 42),
+  )
+  .rarity("==", "Rare")
+  .continue()
+  .compile()
+  //#endregion
+}
+
+${
+  rule(
+    rule().socketGroup(">=", "RGB").linkedSockets("<=", 4),
+    rule().sockets("==", 6).linkedSockets("<=", 4).customSound("hael/6socket")
+  )
+  .background(Colors.lightGrey)
+  .size(45)
+  .continue()
+  .compile()
+}
+
+### unsorted
+
+${
+  rule(
+    rule().identified(true).hasExplicitMod(">=1", "Veiled", "of the Veil", "of Janus' Veil", "of Hillock's Veil", "of Jorgin's Veil", "of Cameria's Veil", "of Aisling's Veil", "of Riker's Veil"),
+    rule().itemClass("Rings", "Amulets", "Jewels", "Belts", "Flasks").fractured(true),
+    rule().synthItem(true),
+
+  )
+  .sound(6)
+  .size(45)
+  .border(Colors.BenGreen)
+  .text(Colors.green)
+  .continue()
+  .compile()
+}
+
+Show
+BaseType "Essence"
+AreaLevel < 69
+Class Currency
+SetBorderColor 0 0 0
+SetTextColor 0 250 250
+SetBackgroundColor 0 75 75
+SetFontSize 45
+CustomAlertSound "gucci_sounds/essence.mp3" 
+MinimapIcon 2 Green Circle
+
+Show
+BaseType "Essence"
+AreaLevel > 69
+Class Currency
+SetBorderColor 0 0 0
+SetTextColor 0 250 250
+SetBackgroundColor 0 75 75
+SetFontSize 45
+MinimapIcon 2 Green Circle
 
 ### class specific leveling is in main file.
 

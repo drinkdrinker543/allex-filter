@@ -17,7 +17,7 @@ ${(0, rule_1.default)().itemClass("Life Flasks", "Mana Flasks", "Hybrid Flasks",
 ### life/mana flask rule
 ${
 //#region misc leveling
-(0, rule_1.default)((0, rule_1.default)().baseType("Medium Life Flask").areaLevel("<=", 11), (0, rule_1.default)().baseType("Large Life Flask").areaLevel("<=", 15), (0, rule_1.default)().baseType("Greater Life Flask").areaLevel("<=", 17), (0, rule_1.default)().baseType("Grand Life Flask").areaLevel("<=", 23), (0, rule_1.default)().baseType("Giant Life Flask").areaLevel("<=", 29), (0, rule_1.default)().baseType("Colossal Life Flask").areaLevel("<=", 35), (0, rule_1.default)().baseType("Hallowed Life Flask").areaLevel("<=", 55), (0, rule_1.default)().baseType("Divine Life Flask").areaLevel("<=", 75))
+(0, rule_1.default)((0, rule_1.default)().baseType("Medium Life Flask").itemLevel("<=", 15), (0, rule_1.default)().baseType("Large Life Flask").itemLevel("<=", 20), (0, rule_1.default)().baseType("Greater Life Flask").itemLevel("<=", 22), (0, rule_1.default)().baseType("Grand Life Flask").itemLevel("<=", 28), (0, rule_1.default)().baseType("Giant Life Flask").itemLevel("<=", 36), (0, rule_1.default)().baseType("Colossal Life Flask").itemLevel("<=", 40), (0, rule_1.default)().baseType("Hallowed Life Flask").itemLevel("<=", 55), (0, rule_1.default)().baseType("Divine Life Flask").itemLevel("<=", 75))
     .customSound("hael/life_flask")
     .icon("Red", "Hexagon")
     .text(colors_1.Colors.black)
@@ -26,7 +26,12 @@ ${
     .size(45)
     .compile()}
 
-${(0, rule_1.default)((0, rule_1.default)().baseType("Medium Mana Flask").areaLevel("<=", 11), (0, rule_1.default)().baseType("Large Mana Flask").areaLevel("<=", 13), (0, rule_1.default)().baseType("Greater Mana Flask").areaLevel("<=", 20), (0, rule_1.default)().baseType("Grand Mana Flask").areaLevel("<=", 26), (0, rule_1.default)().baseType("Giant Mana Flask").areaLevel("<=", 31), (0, rule_1.default)().baseType("Colossal Mana Flask").areaLevel("<=", 37), (0, rule_1.default)().baseType("Hallowed Mana Flask").areaLevel("<=", 49))
+${(0, rule_1.default)((0, rule_1.default)().baseType("Small Life Flask"), (0, rule_1.default)().baseType("Small Mana Flask"))
+    .size(40)
+    .rarity(">=", "Magic")
+    .compile()}
+
+${(0, rule_1.default)((0, rule_1.default)().baseType("Medium Mana Flask").itemLevel("<=", 11), (0, rule_1.default)().baseType("Large Mana Flask").itemLevel("<=", 18), (0, rule_1.default)().baseType("Greater Mana Flask").itemLevel("<=", 35), (0, rule_1.default)().baseType("Grand Mana Flask").itemLevel("<=", 35), (0, rule_1.default)().baseType("Giant Mana Flask").itemLevel("<=", 35), (0, rule_1.default)().baseType("Colossal Mana Flask").itemLevel("<=", 37), (0, rule_1.default)().baseType("Hallowed Mana Flask").itemLevel("<=", 40))
     .customSound("hael/mana_flask")
     .icon("Blue", "Hexagon")
     .text(colors_1.Colors.black)
@@ -52,6 +57,8 @@ ${(0, rule_1.default)().baseType("Bismuth Flask", "Sapphire Flask", "Topaz Flask
     .background(colors_1.Colors.black)
     .border(colors_1.Colors.red)
     .compile()}
+
+${(0, rule_1.default)().itemClass("Life Flasks", "Mana Flasks", "Hybrid Flasks", "Utility Flasks").size(45).rarity("==", "Unique").icon("Cyan", "Hexagon").compile()}
 `;
 // Write filter to output directory
 fs_1.default.writeFileSync(path_1.default.join(__dirname, `../../output/${filterName}.filter`), getFilter());

@@ -6,7 +6,7 @@ import {Colors} from "../types/colors";
 // this filter contains rules related to flasks. doesn't contain show uniques.
 
 // Set filtername here
-const filterName = 'FlaskFilter';
+const filterName = 'ZZZZ-hael-FlaskFilter';
 
 const getFilter = () => `
 ${
@@ -18,12 +18,12 @@ ${
 ${
   //#region misc leveling
   rule(
-    rule().baseType("Medium Life Flask").itemLevel("<=", 11),
-    rule().baseType("Large Life Flask").itemLevel("<=", 15),
-    rule().baseType("Greater Life Flask").itemLevel("<=", 17),
-    rule().baseType("Grand Life Flask").itemLevel("<=", 23),
-    rule().baseType("Giant Life Flask").itemLevel("<=", 29),
-    rule().baseType("Colossal Life Flask").itemLevel("<=", 35),
+    rule().baseType("Medium Life Flask").itemLevel("<=", 15),
+    rule().baseType("Large Life Flask").itemLevel("<=", 20),
+    rule().baseType("Greater Life Flask").itemLevel("<=", 22),
+    rule().baseType("Grand Life Flask").itemLevel("<=", 28),
+    rule().baseType("Giant Life Flask").itemLevel("<=", 36),
+    rule().baseType("Colossal Life Flask").itemLevel("<=", 40),
     rule().baseType("Hallowed Life Flask").itemLevel("<=", 55),
     rule().baseType("Divine Life Flask").itemLevel("<=", 75),
   )
@@ -34,6 +34,16 @@ ${
     .border(Colors.black)
     .size(45)
     .compile()
+}
+
+${
+  rule(
+    rule().baseType("Small Life Flask"),
+    rule().baseType("Small Mana Flask")
+  )
+  .size(40)
+  .rarity(">=", "Magic")
+  .compile()
 }
 
 ${

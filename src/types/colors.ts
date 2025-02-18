@@ -9,16 +9,16 @@ export class Colors {
     this.r = r;
     this.g = g;
     this.b = b;
-    this.a = a == undefined ? 240 : a;
+    this.a = a;
   }
 
   static readonly black = new Colors(0, 0, 0)
-  static readonly white = new Colors(240, 240, 240)
-  static readonly lightGrey = new Colors(180, 180, 180)
+  static readonly white = new Colors(250, 250, 250)
+  static readonly lightGrey = new Colors(120, 120, 120)
   static readonly grey = new Colors(140, 140, 140)
   static readonly darkGrey = new Colors(90, 90, 90)
   static readonly red = new Colors(240, 20, 20)
-  static readonly green = new Colors(20, 240, 20)
+  static readonly green = new Colors(0, 200, 0)
   static readonly blue = new Colors(20, 20, 240)
   static readonly purple = new Colors(186, 85, 211)
   static readonly brown = new Colors(160, 82, 45)
@@ -27,7 +27,12 @@ export class Colors {
   static readonly rareColor = new Colors(255,255,119)
   static readonly magicColor = new Colors(136,136,255)
   static readonly normalColor = new Colors(200,200,200)
-  static readonly gucciPurple = new Colors(250, 0, 125) // used for leveling currency
-  static readonly gearingColor = new Colors(170, 158, 130)
+  static readonly gucciPurple = new Colors(250, 0, 125) // pinkish color from gucci, used for chance orb and things you pick up
+  static readonly gearingColor = new Colors(100, 150, 200)
+  static readonly greenBlue = new Colors(0, 150, 250) // gucci thing used for low tier currency
+  static readonly gucciBlue2 = new Colors(100, 150, 200) // light blue color from gucci, used for low tier currency
+  static readonly nsT2 = new Colors(0, 20, 180)
+  static readonly nsT3 = new Colors(0, 220, 240)
+  static readonly BenGreen = new Colors(0, 255, 255)
   static readonly empty = new Colors(0, 0, 0)
 }

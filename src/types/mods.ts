@@ -1410,3 +1410,4 @@ export type ExplicitMods =
   | 'of the Yeti'
   | 'of the Zealous'
   | 'of the Zephyr'
+  | "Veiled"

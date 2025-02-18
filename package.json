@@ -5,10 +5,12 @@
   "main": "index.js",
   "scripts": {
     "myfilter": "ts-node ./src/filters/my-filter.ts",
-    "flaskrules": "ts-node ./src/filters/flask-rules.ts",
-    "gem-rules": "ts-node ./src/filters/flask-rules.ts",
+    "flask-rules": "ts-node ./src/filters/flask-rules.ts",
+    "gem-rules": "ts-node ./src/filters/gem-rules.ts",
     "gear-rules": "ts-node ./src/filters/gear-rules.ts",
-    "currency-rules": "ts-node ./src/filters/currency-rules.ts"
+    "currency-rules": "ts-node ./src/filters/currency-rules.ts",
+    "pconc-rules": "ts-node ./src/filters/hael-pconc-champ.ts",
+    "bow-rules": "ts-node ./src/filters/hael-bows.ts"
   },
   "keywords": [],
   "author": "",

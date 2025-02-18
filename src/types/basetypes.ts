@@ -1304,7 +1304,7 @@ export type ItemBaseType =
   | 'Unstable Catalyst'
   | 'Vaal Orb'
   | 'Vaal Scouting Report'
-  | 'Veiled Chaos Orb'
+  | 'Veiled Orb'
   | 'Vivid Crystallised Lifeforce'
   | "Warlord's Exalted Orb"
   | 'Wild Crystallised Lifeforce'
@@ -2251,70 +2251,123 @@ export type ItemBaseType =
   | 'Withering Step'
   | 'Withering Touch Support'
   | 'Wrath'
-  | 'Zealotry'  | 'Gilded Abyss Scarab'
-  | 'Gilded Ambush Scarab'
-  | 'Gilded Bestiary Scarab'
-  | 'Gilded Blight Scarab'
-  | 'Gilded Breach Scarab'
-  | 'Gilded Cartography Scarab'
-  | 'Gilded Divination Scarab'
-  | 'Gilded Elder Scarab'
-  | 'Gilded Expedition Scarab'
-  | 'Gilded Harbinger Scarab'
-  | 'Gilded Legion Scarab'
-  | 'Gilded Ultimatum Scarab'
-  | 'Gilded Reliquary Scarab'
-  | 'Gilded Shaper Scarab'
-  | 'Gilded Sulphite Scarab'
-  | 'Gilded Torment Scarab'
-  | 'Polished Abyss Scarab'
-  | 'Polished Ambush Scarab'
-  | 'Polished Bestiary Scarab'
-  | 'Polished Blight Scarab'
-  | 'Polished Breach Scarab'
-  | 'Polished Cartography Scarab'
-  | 'Polished Divination Scarab'
-  | 'Polished Elder Scarab'
-  | 'Polished Expedition Scarab'
-  | 'Polished Harbinger Scarab'
-  | 'Polished Legion Scarab'
-  | 'Polished Ultimatum Scarab'
-  | 'Polished Reliquary Scarab'
-  | 'Polished Shaper Scarab'
-  | 'Polished Sulphite Scarab'
-  | 'Polished Torment Scarab'
-  | 'Rusted Abyss Scarab'
-  | 'Rusted Ambush Scarab'
-  | 'Rusted Bestiary Scarab'
-  | 'Rusted Blight Scarab'
-  | 'Rusted Breach Scarab'
-  | 'Rusted Cartography Scarab'
-  | 'Rusted Divination Scarab'
-  | 'Rusted Elder Scarab'
-  | 'Rusted Expedition Scarab'
-  | 'Rusted Harbinger Scarab'
-  | 'Rusted Legion Scarab'
-  | 'Rusted Ultimatum Scarab'
-  | 'Rusted Reliquary Scarab'
-  | 'Rusted Shaper Scarab'
-  | 'Rusted Sulphite Scarab'
-  | 'Rusted Torment Scarab'
-  | 'Winged Abyss Scarab'
-  | 'Winged Ambush Scarab'
-  | 'Winged Bestiary Scarab'
-  | 'Winged Blight Scarab'
-  | 'Winged Breach Scarab'
-  | 'Winged Cartography Scarab'
-  | 'Winged Divination Scarab'
-  | 'Winged Elder Scarab'
-  | 'Winged Expedition Scarab'
-  | 'Winged Harbinger Scarab'
-  | 'Winged Legion Scarab'
-  | 'Winged Ultimatum Scarab'
-  | 'Winged Reliquary Scarab'
-  | 'Winged Shaper Scarab'
-  | 'Winged Sulphite Scarab'
-  | 'Winged Torment Scarab'
+  | 'Zealotry'  
+  | "Cosmic Fragment"
+| "Decaying Fragment"
+| "Awakening Fragment"
+| "Synthesising Fragment"
+| "Reality Fragment"
+| "Devouring Fragment"
+| "Blazing Fragment"
+| "Breach Scarab"
+| "Breach Scarab of the Dreamer"
+| "Breach Scarab of Lordship"
+| "Breach Scarab of Splintering"
+| "Breach Scarab of Snares"
+| "Cartography Scarab"
+| "Cartography Scarab of Ascension"
+| "Cartography Scarab of Singularity"
+| "Cartography Scarab of Corruption"
+| "Cartography Scarab of Duplication"
+| "Reliquary Scarab"
+| "Reliquary Scarab of Overlords"
+| "Reliquary Scarab of Vision"
+| "Bestiary Scarab"
+| "Bestiary Scarab of the Herd"
+| "Bestiary Scarab of Duplicating"
+| "Bestiary Scarab of the Shadowed Crow"
+| "Influencing Scarab of the Shaper"
+| "Influencing Scarab of the Elder"
+| "Influencing Scarab of Hordes"
+| "Influencing Scarab of Conversion"
+| "Sulphite Scarab"
+| "Sulphite Scarab of Greed"
+| "Sulphite Scarab of Fumes"
+| "Divination Scarab"
+| "Divination Scarab of Curation"
+| "Divination Scarab of Completion"
+| "Torment Scarab"
+| "Torment Scarab of Peculiarity"
+| "Torment Scarab of Release"
+| "Ambush Scarab"
+| "Ambush Scarab of Hidden Compartments"
+| "Ambush Scarab of Potency"
+| "Ambush Scarab of Containment"
+| "Ambush Scarab of Discernment"
+| "Harbinger Scarab"
+| "Harbinger Scarab of Discernment"
+| "Harbinger Scarab of Regency"
+| "Harbinger Scarab of Warhoards"
+| "Expedition Scarab"
+| "Expedition Scarab of Runefinding"
+| "Expedition Scarab of Verisium Powder"
+| "Expedition Scarab of the Skald"
+| "Expedition Scarab of Archaeology"
+| "Legion Scarab"
+| "Legion Scarab of Officers"
+| "Legion Scarab of Command"
+| "Legion Scarab of The Sekhema"
+| "Legion Scarab of Eternal Conflict"
+| "Abyss Scarab"
+| "Abyss Scarab of Multitudes"
+| "Abyss Scarab of Edifice"
+| "Abyss Scarab of Emptiness"
+| "Anarchy Scarab"
+| "Anarchy Scarab of Gigantification"
+| "Anarchy Scarab of Partnership"
+| "Essence Scarab"
+| "Essence Scarab of Ascent"
+| "Essence Scarab of Stability"
+| "Essence Scarab of Calcification"
+| "Domination Scarab"
+| "Domination Scarab of Abnormality"
+| "Domination Scarab of Teachings"
+| "Domination Scarab of Terrors"
+| "Ritual Scarab of Selectiveness"
+| "Ritual Scarab of Recognition"
+| "Ritual Scarab of Abundance"
+| "Harvest Scarab"
+| "Harvest Scarab of Doubling"
+| "Harvest Scarab of Cornucopia"
+| "Incursion Scarab"
+| "Incursion Scarab of Invasion"
+| "Incursion Scarab of Champions"
+| "Incursion Scarab of Timelines"
+| "Betrayal Scarab"
+| "Betrayal Scarab of Intelligence"
+| "Betrayal Scarab of Reinforcements"
+| "Betrayal Scarab of Perpetuation"
+| "Beyond Scarab"
+| "Beyond Scarab of Corruption"
+| "Beyond Scarab of Haemophilia"
+| "Beyond Scarab of Resurgence"
+| "Beyond Scarab of the Invasion"
+| "Ultimatum Scarab"
+| "Ultimatum Scarab of Bribing"
+| "Ultimatum Scarab of Dueling"
+| "Ultimatum Scarab of Catalysing"
+| "Ultimatum Scarab of Inscription"
+| "Delirium Scarab"
+| "Delirium Scarab of Mania"
+| "Delirium Scarab of Paranoia"
+| "Delirium Scarab of Neuroses"
+| "Delirium Scarab of Delusions"
+| "Blight Scarab"
+| "Blight Scarab of Bounty"
+| "Blight Scarab of Oils"
+| "Blight Scarab of Blooming"
+| "Scarab of Monstrous Lineage"
+| "Scarab of Adversaries"
+| "Mysterious Scarab"
+| "Scarab of Hunted Traitors"
+| "Scarab of Stability"
+| "Horned Scarab of Bloodlines"
+| "Horned Scarab of Nemeses"
+| "Horned Scarab of Preservation"
+| "Horned Scarab of Awakening"
+| "Horned Scarab of Tradition"
+| "Horned Scarab of Glittering"
+| "Horned Scarab of Pandemonium"
   | "Rogue's Marker"
   | "Al-Hezmin's Crest"
   | "Baran's Crest"
@@ -2361,3 +2414,18 @@ export type ItemBaseType =
   | "Veritania's Crest"
   | "Goat's Horn"
   | "Rusted Axe"
+  | "Treasure Key"
+  | "Hinekora's Lock"
+  | "Assassin's Gift"
+  | "Avian Pursuit"
+  | "Father's Love"
+  | "I See Brothers"
+  | "Forbidden Tome"
+  | "Lonely Warrior"
+  | "Friendship"
+  | "The Long Watch"
+  | "Temperance"
+  | "Who Asked"
+  | "Oil"
+  | "Invitation"
+  | "Synthesised Map"

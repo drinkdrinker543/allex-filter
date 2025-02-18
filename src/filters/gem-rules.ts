@@ -3,12 +3,12 @@ import path from 'path';
 import rule from '../rule';
 import {Colors} from "../types/colors";
 
-const wayLessThanTink = 5
-const lessThanTink = 10
-const tink = 15
+const wayLessThanTink = 2
+const lessThanTink = 4
+const tink = 6
 
 // Set filtername here
-const filterName = 'GemFilter';
+const filterName = 'ZZZZ-hael-GemFilter';
 
 const getFilter = () => `
 ${
@@ -74,7 +74,6 @@ ${
       rule().baseType("Burning Arrow").areaLevel("<=", 12),
       rule().baseType("Momentum Support").areaLevel("<=", 12),
       rule().baseType("Sniper's Mark").areaLevel("<=", 12),
-      rule().baseType("War Banner").areaLevel("<=", 12),
       rule().baseType("Frostblink").areaLevel("<=", 12),
       rule().baseType("Faster Attacks Support").areaLevel("<=", 42),
       rule().baseType("Poacher's Mark").areaLevel("<=", 21),
@@ -85,7 +84,13 @@ ${
       rule().baseType("Blast Rain").areaLevel("<=", 45),
       rule().baseType("Returning Projectiles Support").areaLevel("<=", 60),
       rule().baseType("Multiple Totems Support").areaLevel("<=", 60),
-      rule().baseType("Artillery Ballista").areaLevel("<=", 42),
+      rule().baseType("Manaforged Arrows Support").areaLevel("<=", 42),
+      rule().baseType("Lesser Multiple Projectiles Support").areaLevel("<=", 22),
+      rule().baseType("Lightning Arrow").areaLevel("<=", 42),
+      rule().baseType("Dash").areaLevel("<=", 12),
+      rule().baseType("Shrapnel Ballista").areaLevel("<=", 42),
+      rule().baseType("Herald of Ice").areaLevel("<=", 42),
+      rule().baseType("Haste").areaLevel("<=", 42),
     )
       .sound(lessThanTink)
       .icon("Cyan", "Hexagon")

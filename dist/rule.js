@@ -96,7 +96,12 @@ const rule = (...rules) => {
         },
         // change file type here. didn't want to put in filter
         customSound(path, volume = 300) {
-            this.content.set('CustomAlertSound', `"allex-sounds/${path}.wav" ${volume}`);
+            if (!path.includes("mp3")) {
+                this.content.set('CustomAlertSound', `"allex-sounds/${path}.wav" ${volume}`);
+            }
+            if (path.includes("mp3")) {
+                this.content.set('CustomAlertSound', `"${path}" ${volume}`);
+            }
             return this;
         },
         icon(color, shape, size = 2) {
@@ -104,19 +109,19 @@ const rule = (...rules) => {
             return this;
         },
         text(color) {
-            this.content.set('SetTextColor', `${color.r} ${color.g} ${color.b} ${color.a}`);
+            this.content.set('SetTextColor', `${color.r} ${color.g} ${color.b} ${color.a !== undefined ? color.a : ''}`);
             return this;
         },
         border(color) {
-            this.content.set('SetBorderColor', `${color.r} ${color.g} ${color.b} ${color.a}`);
+            this.content.set('SetBorderColor', `${color.r} ${color.g} ${color.b} ${color.a !== undefined ? color.a : ''}`);
             return this;
         },
         background(color) {
-            this.content.set('SetBackgroundColor', `${color.r} ${color.g} ${color.b} ${color.a}`);
+            this.content.set('SetBackgroundColor', `${color.r} ${color.g} ${color.b} ${color.a !== undefined ? color.a : ''}`);
             return this;
         },
         backgroundColor(color) {
-            this.content.set("SetBackgroundColor", `${color.r} ${color.g} ${color.b} ${color.a}`);
+            this.content.set("SetBackgroundColor", `${color.r} ${color.g} ${color.b} ${color.a !== undefined ? color.a : ''}`);
             return this;
         },
         // Operator conditions

@@ -122,7 +122,8 @@ export type Currency =
   | 'Unstable Catalyst'
   | 'Vaal Orb'
   | 'Vaal Scouting Report'
-  | 'Veiled Chaos Orb'
+  | 'Veiled Orb'
   | 'Vivid Crystallised Lifeforce'
   | "Warlord's Exalted Orb"
   | 'Wild Crystallised Lifeforce'
+  | "Hinekora's Lock"
